@@ -14,7 +14,6 @@ namespace Game_C_Sharp_Uv
         public static int x = 0;
         public static int y = 0;
         public static int score = 0;
-        public static bool right_ = true;
         public static bool ate = false;
         public static string[,] polygon = new string[10, 10];
         public static void RenderScene()
@@ -30,10 +29,6 @@ namespace Game_C_Sharp_Uv
             Console.WriteLine();
             Console.Write("Your score is: " + score);
         }
-        public static void ClearScene()
-        {
-            Console.Clear();
-        }
         public static void Filler(string symbol)
         {
             for (int i = 0; i < 10; i++)
@@ -44,12 +39,13 @@ namespace Game_C_Sharp_Uv
                 }
             }
         }
-        public static void Right()
+        public static bool Right()
         {
             /*if (y == 8 && x == 9)
                 return; */
             if (y == 9)
-                return;
+                return false;
+            Console.Clear();
             if (polygon[x, y + 1] == "*")
             {
                 polygon[x, y] = " ";
@@ -63,6 +59,8 @@ namespace Game_C_Sharp_Uv
                 y++;
                 polygon[x, y] = "-";
             }
+            RenderScene();
+            return true;
         }
         public static void Left()
         {
@@ -70,6 +68,7 @@ namespace Game_C_Sharp_Uv
                 return;
              if (y == 0)
                 return;
+            Console.Clear();
              if(polygon[x, y-1] == "*")
             {
                 polygon[x, y] = " ";
@@ -83,6 +82,7 @@ namespace Game_C_Sharp_Uv
                 y--;
                 polygon[x, y] = "-";
             }
+            RenderScene();
         }
         public static void Up()
         {
@@ -90,6 +90,7 @@ namespace Game_C_Sharp_Uv
             {
                 return;
             }
+            Console.Clear();
             if (polygon[x - 1, y] == "*")
             {
                 polygon[x, y] = " ";
@@ -103,13 +104,15 @@ namespace Game_C_Sharp_Uv
                 x--;
                 polygon[x, y] = "|";
             }
+            RenderScene();
         }
         public static void Down()
         {
             if (x == 9)
                 return;
-           /* if (x + 1 == 9 && y == 9)
-                return; */
+            /* if (x + 1 == 9 && y == 9)
+                 return; */
+            Console.Clear();
             if (polygon[x+1, y] == "*")
             {
                 polygon[x, y] = " ";
@@ -123,11 +126,11 @@ namespace Game_C_Sharp_Uv
                 x++;
                 polygon[x, y] = "|";
             }
+            RenderScene();
         } 
         public static void StartGame()
         {
-            
-            ClearScene();
+            Console.Clear();
             x = 0; y = 0;
             Filler(" ");
             polygon[0, 0] = "-";
@@ -141,28 +144,19 @@ namespace Game_C_Sharp_Uv
                 var key = Console.ReadKey().Key;
                 if (key == ConsoleKey.RightArrow)
                 {
-                    ClearScene();
                     Right();
-                    RenderScene();
-                    
                 }
                 else if (key == ConsoleKey.LeftArrow)
                 {
-                    ClearScene();
                     Left();
-                    RenderScene();
                 }
                 else if(key == ConsoleKey.UpArrow)
                 {
-                    ClearScene();
                     Up();
-                    RenderScene();
                 }
                 else if(key == ConsoleKey.DownArrow)
                 {
-                    ClearScene();
                     Down();
-                    RenderScene();
                 }
                 if (ate)
                 {
@@ -182,15 +176,6 @@ namespace Game_C_Sharp_Uv
         static void Main(string[] args)
         {
             StartGame();
-            var key1 = Console.ReadKey().Key;
-            if (key1 == ConsoleKey.R)
-            {
-                StartGame();
-            }
-            else
-            {
-                return;
-            }
         }
     }
 }

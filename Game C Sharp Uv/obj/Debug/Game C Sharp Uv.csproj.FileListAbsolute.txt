@@ -1,0 +1,6 @@
+C:\Users\Пользователь\Documents\Visual Studio 2015\Projects\Game C Sharp Uv\Game C Sharp Uv\bin\Debug\Game C Sharp Uv.exe.config
+C:\Users\Пользователь\Documents\Visual Studio 2015\Projects\Game C Sharp Uv\Game C Sharp Uv\bin\Debug\Game C Sharp Uv.exe
+C:\Users\Пользователь\Documents\Visual Studio 2015\Projects\Game C Sharp Uv\Game C Sharp Uv\bin\Debug\Game C Sharp Uv.pdb
+C:\Users\Пользователь\Documents\Visual Studio 2015\Projects\Game C Sharp Uv\Game C Sharp Uv\obj\Debug\Game C Sharp Uv.csprojResolveAssemblyReference.cache
+C:\Users\Пользователь\Documents\Visual Studio 2015\Projects\Game C Sharp Uv\Game C Sharp Uv\obj\Debug\Game C Sharp Uv.exe
+C:\Users\Пользователь\Documents\Visual Studio 2015\Projects\Game C Sharp Uv\Game C Sharp Uv\obj\Debug\Game C Sharp Uv.pdb
