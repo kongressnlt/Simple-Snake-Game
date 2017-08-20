@@ -128,6 +128,24 @@ namespace Game_C_Sharp_Uv
             }
             RenderScene();
         } 
+        public static void new_ran()
+        {
+            int ran_x;
+            int ran_y;
+            Random ran = new Random();
+            while (true)
+            {
+                ran_x = ran.Next(0, 10);
+                ran_y = ran.Next(0, 10);
+                if (ran_x != x && ran_y != y)
+                {
+                    score++;
+                    ate = false;
+                    polygon[ran_x, ran_y] = "*";
+                    break;
+                }
+            }
+        }
         public static void StartGame()
         {
             Console.Clear();
@@ -160,21 +178,13 @@ namespace Game_C_Sharp_Uv
                 }
                 if (ate)
                 {
-                    score++;
-                    ran_x = ran.Next(0, 10);
-                    ran_y = ran.Next(0, 10);
-                    if (ran_x == x && ran_y == y)
-                    {
-                        ran_x = ran.Next(0, 10);
-                        ran_y = ran.Next(0, 10);
-                    }
-                    ate = false;
-                    polygon[ran_x, ran_y] = "*";
+                    new_ran();
                 }
             }
         }
         static void Main(string[] args)
         {
+            Console.CursorVisible = false;
             StartGame();
         }
     }
