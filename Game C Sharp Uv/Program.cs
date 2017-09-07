@@ -1,20 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
-using System.Windows.Forms;
+using System;
+using System.Reflection;
+using System.Runtime.InteropServices;
+/* Rus: Привет, пользователь yg или иных форумов, мой (@alexuiop1337) проект в открытом доступе, все что мне надо, это чтобы ты оставил эту надпись  
+ Eng: Hey, user of YG or any other forum, my (@alexuiop1337) project is open source, and all that i need is that you just keep this notice*/
+// By Alexuiop1337
 
 namespace Game_C_Sharp_Uv
 {
     class Program
-    {
-        
+    {  
         public static int x = 0;
         public static int y = 0;
+        public static int body = 0;
         public static int score = 0;
-        public static bool ate = false;
+        public static ConsoleKey matrix_key;
+        public static bool[] using_dir = new bool[4] { false, false, false, false};
         public static string[,] polygon = new string[10, 10];
         public static void RenderScene()
         {
@@ -39,95 +39,35 @@ namespace Game_C_Sharp_Uv
                 }
             }
         }
-        public static bool Right()
+        public static void Update_Matrix(int dir)
         {
-            /*if (y == 8 && x == 9)
-                return; */
-            if (y == 9)
-                return false;
+            int[] delta_x = new int[4] { 0, -1, 0, 1 };
+            int[] delta_y = new int[4] { 1, 0, -1, 0 };
+            int _X = delta_x[dir] + x;
+            int _Y = delta_y[dir] + y;
+            if ((_X < 0 || _X > 9) || (_Y < 0 || _Y > 9))
+            {
+                return;
+            }
             Console.Clear();
-            if (polygon[x, y + 1] == "*")
+            if (polygon[_X, _Y] == "&")
             {
                 polygon[x, y] = " ";
-                ate = true;
-                y++;
-                polygon[x, y] = "-";
+                polygon[_X, _Y] = "*";
+                x = _X;
+                y = _Y;
+                new_ran();
             }
             else
             {
                 polygon[x, y] = " ";
-                y++;
-                polygon[x, y] = "-";
+                polygon[_X, _Y] = "*";
+                x = _X;
+                y = _Y;
             }
             RenderScene();
-            return true;
+            return;
         }
-        public static void Left()
-        {
-            if (x == 0 && y == 0)
-                return;
-             if (y == 0)
-                return;
-            Console.Clear();
-             if(polygon[x, y-1] == "*")
-            {
-                polygon[x, y] = " ";
-                ate = true;
-                y--;
-                polygon[x, y] = "-";
-            }
-            else
-            {
-                polygon[x, y] = " ";
-                y--;
-                polygon[x, y] = "-";
-            }
-            RenderScene();
-        }
-        public static void Up()
-        {
-            if (x == 0)
-            {
-                return;
-            }
-            Console.Clear();
-            if (polygon[x - 1, y] == "*")
-            {
-                polygon[x, y] = " ";
-                ate = true;
-                x--;
-                polygon[x, y] = "|";
-             }
-            else
-            {
-                polygon[x, y] = " ";
-                x--;
-                polygon[x, y] = "|";
-            }
-            RenderScene();
-        }
-        public static void Down()
-        {
-            if (x == 9)
-                return;
-            /* if (x + 1 == 9 && y == 9)
-                 return; */
-            Console.Clear();
-            if (polygon[x+1, y] == "*")
-            {
-                polygon[x, y] = " ";
-                ate = true;
-                x++;
-                polygon[x, y] = "|"; 
-            }
-            else
-            {
-                polygon[x, y] = " ";
-                x++;
-                polygon[x, y] = "|";
-            }
-            RenderScene();
-        } 
         public static void new_ran()
         {
             int ran_x;
@@ -140,8 +80,7 @@ namespace Game_C_Sharp_Uv
                 if (ran_x != x && ran_y != y)
                 {
                     score++;
-                    ate = false;
-                    polygon[ran_x, ran_y] = "*";
+                    polygon[ran_x, ran_y] = "&";
                     break;
                 }
             }
@@ -149,39 +88,37 @@ namespace Game_C_Sharp_Uv
         public static void StartGame()
         {
             Console.Clear();
-            x = 0; y = 0;
+            x = 0;
+            y = 0;
             Filler(" ");
-            polygon[0, 0] = "-";
+            polygon[0, 0] = "*";
             Random ran = new Random();
             int ran_x = ran.Next(1, 10);
             int ran_y = ran.Next(1, 10);
-            polygon[ran_x, ran_y] = "*";
+            polygon[ran_x, ran_y] = "&";
             RenderScene();
             while (true)
             {
-                var key = Console.ReadKey().Key;
-                if (key == ConsoleKey.RightArrow)
+                matrix_key = Console.ReadKey().Key;
+                if (matrix_key == ConsoleKey.RightArrow)
                 {
-                    Right();
+                    Update_Matrix(0);
                 }
-                else if (key == ConsoleKey.LeftArrow)
+                else if (matrix_key == ConsoleKey.LeftArrow)
                 {
-                    Left();
+                    Update_Matrix(2);;
                 }
-                else if(key == ConsoleKey.UpArrow)
+                else if (matrix_key == ConsoleKey.UpArrow)
                 {
-                    Up();
+                    Update_Matrix(1);
                 }
-                else if(key == ConsoleKey.DownArrow)
+                else if (matrix_key == ConsoleKey.DownArrow)
                 {
-                    Down();
-                }
-                if (ate)
-                {
-                    new_ran();
+                    Update_Matrix(3);
                 }
             }
         }
+        
         static void Main(string[] args)
         {
             Console.CursorVisible = false;
